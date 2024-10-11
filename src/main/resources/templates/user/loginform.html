@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>/user/loginform.html</title>
+</head>
+<body>
+<h3>로그인 폼</h3>
+<div th:if="${ not #strings.isEmpty(param.error)}">
+  <p>[[${errMsg}]]</p>
+</div>
+
+<form th:action="@{/user/login}" method="post">
+  <input type="text" name="userName" placeholder="사용자명 입력..."/>
+  <input type="password" name="password" placeholder="비밀번호 입력..."/>
+  <button type="submit">로그인</button>
+</form>
+</body>
+</html>

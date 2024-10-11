@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+    <select id="getUser" parameterType="String" resultType="userDto">
+        SELECT *
+        FROM user_tbl
+        WHERE userName=#{userName}
+    </select>
+    <insert id="insert" parameterType="userDto">
+        INSERT INTO user_tbl
+        (num, nickName,userName, password, email,role, regdate)
+        VALUES(user_seq.NEXTVAL,#{nickName}, #{userName}, #{password}, #{Email}, #{role}, SYSDATE)
+    </insert>
+    <update id="update" parameterType="userDto">
+        UPDATE user_tbl
+        SET email=#{email},nickName=#{nickName} <if test="profile != null">,profile=#{profile}</if>
+        WHERE userName=#{userName}
+    </update>
+</mapper>

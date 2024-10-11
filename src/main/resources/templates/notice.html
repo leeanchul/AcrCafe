@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>/notice</title>
+</head>
+<body>
+<h1 th:text="${team}"></h1>
+
+<ul>
+  <li th:each="tmp : ${list}">
+    <p th:text="${tmp}"></p>
+  </li>
+
+</ul>
+</body>
+</html>

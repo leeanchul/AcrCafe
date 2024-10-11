@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>/home</title>
+  <style>
+      #profileImage{
+          width: 100px;
+          height: 100px;
+          border: 1px solid #cecece;
+          border-radius: 50%;
+      }
+
+  </style>
+</head>
+<body>
+<h1>home</h1>
+<div>
+
+  <div th:if="${userName != null}">
+
+    <a th:href="@{/user/updateform}"> <p th:text="${userName}"></p></a>
+    <div>
+      <th:block th:if="${dto.profile == null}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+      </th:block>
+      <th:block th:unless="${dto.profile == null}">
+        <img id="profileImage" th:src="@{/upload/{name}(name=${dto.profile})}" alt="프로필 이미지" />
+      </th:block>
+    </div>
+    <a th:href="@{/user/logout}">로그아웃</a>
+  </div>
+  <div th:unless="${userName != null}">
+    <a th:href="@{/user/signupform}">회원가입</a>
+    <a th:href="@{/user/loginform}">로그인</a>
+  </div>
+</div>
+<p>홈 페이지 입니다.</p>
+<ul>
+  <li><a th:href="@{/play}">놀기</a></li>
+  <li><a th:href="@{/notice}">정보</a></li>
+  <li><a th:href="@{/security}">비밀</a></li>
+  <li><a th:href="@{/test/list}">!!!!테스트 !!!!</a></li>
+  <li><a th:href="@{/cafe/list}">카페 목록(한줄 일기로 바꿀 예정)</a></li>
+  <li><a th:href="@{/gallery/list}">갤러리</a></li>
+</ul>
+</body>
+</html>
