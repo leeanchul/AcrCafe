@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="testComment">
+    <insert id="insert" parameterType="testCommentDto">
+        INSERT INTO  board_test_comment
+            (num, writer,  content,ref_group,regdate)
+        VALUES(test_seq.NEXTVAL, #{writer}, #{content},#{ref_group}, SYSDATE)
+    </insert>
+
+    <select id="getList" parameterType="int" resultType="testCommentDto">
+        SELECT *
+        FROM board_test_comment
+        where ref_group=#{ref_group}
+        ORDER BY num DESC
+
+    </select>
+</mapper>

@@ -30,7 +30,12 @@ public class TestController {
   @Value("${file.location}")
   private String fileLocation;
 
-
+  @PostMapping("/test/insertComment")
+  public String insert(TestCommentDto dto){
+    service.commentInsert(dto);
+    //댓글 입력하고,현재창에 있게하기위해서
+    return "redirect:/test/detail?num=" + dto.getRef_group();
+  }
 
   @GetMapping("/test/list")
   public String list(Model model,TestDto dto){
@@ -52,25 +57,8 @@ public class TestController {
   @GetMapping("/test/detail")
   public String detail(Model model,int num){
     service.getDto(model,num);
+    service.commentList(model,num);
     return "test/detail";
   }
 
-  //업로드한 사진 보여주기위한 코드
-  @ResponseBody
-  @GetMapping(
-      value = "/upload/{imageName}" ,
-      // jpg, png, gif 이미지 데이터를 응답할수 있도록 produces 에 배열로 전달한다.
-      produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,
-          MediaType.IMAGE_GIF_VALUE}
-  )
-  //@PathVariable 은Get방식에 imageName 을 String name으로 바인딩 하는것이다.
-  public byte[] image(@PathVariable("imageName") String name) throws IOException {
-
-    //읽어들일 파일의 절대 경로
-    String absolutePath=fileLocation + File.separator + name;
-    // 파일에서 읽어들일 InputStream
-    InputStream is=new FileInputStream(absolutePath);
-    // commons io 에 있는 IOUtils 클래스를 이용해서 이미지 파일에서 byte[] 을 얻어낸다
-    return IOUtils.toByteArray(is);
-  }
 }

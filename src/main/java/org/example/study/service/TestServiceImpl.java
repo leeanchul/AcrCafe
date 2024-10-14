@@ -1,6 +1,8 @@
 package org.example.study.service;
 
+import org.example.study.dto.TestCommentDto;
 import org.example.study.dto.TestDto;
+import org.example.study.repository.TestCommentDao;
 import org.example.study.repository.TestDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +26,8 @@ public class TestServiceImpl implements TestService{
   @Autowired
   private TestDao dao;
 
+  @Autowired
+  private TestCommentDao commentDao;
   //파일을 저장할 위치
   @Value("${file.location}")
   private String fileLocation;
@@ -82,7 +86,7 @@ public class TestServiceImpl implements TestService{
     dto.setEndRowNum(endRowNum);
     //TestDto 인자로 전달해서 글 목록 얻어오기
     List<TestDto> list=dao.getList(dto);
-
+    model.addAttribute("comment",list);
     // view page 에 전달할 내용을 Model 객체에 담는다.
     model.addAttribute("list", list);
     model.addAttribute("startPageNum", startPageNum);
@@ -97,6 +101,19 @@ public class TestServiceImpl implements TestService{
   public void getDto(Model model, int num) {
     TestDto dto=dao.getDto(num);
     model.addAttribute("dto",dto);
+  }
+
+  @Override
+  public void commentList(Model model, int ref_group) {
+    List<TestCommentDto> list=commentDao.getCommnetList(ref_group);
+    model.addAttribute("comment",list);
+  }
+
+  @Override
+  public void commentInsert(TestCommentDto dto) {
+    String writer= SecurityContextHolder.getContext().getAuthentication().getName();
+    dto.setWriter(writer);
+    commentDao.insert(dto);
   }
 
 }

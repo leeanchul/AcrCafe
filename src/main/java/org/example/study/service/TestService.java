@@ -9,4 +9,7 @@ public interface TestService {
   void list(Model model, TestDto dto);
   void getDto(Model model, int num);
 
+  //댓글
+  void commentList(Model model,int ref_group);
+  void commentInsert(TestCommentDto dto);
 }
