@@ -38,7 +38,7 @@ public class SecurityConfig {
         "/user/loginform", "/user/login_fail", "/user/expired",
         "/gallery/list", "/gallery/detail", "/upload/images/**"
         ,"/upload/**","/test/list",
-        "/cafe/list", "/caf/detail","/test/comment_list","/test/list",
+        "/cafe/list", "/caf/detail","/test/comment_list","/test/list", "/test/detail/**",
         "/api/**"};
 
     hs.csrf(csrf->csrf.disable())

@@ -8,6 +8,13 @@
 </head>
 <body>
 <div class="container">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/test/list}">Cafe</a></li>
+      <li class="breadcrumb-item active">Detail</li>
+    </ol>
+  </nav>
   <a th:href="@{/}">홈</a>
   <br>
   <a th:href="@{/gallery/upload_form}">업로드 하러가기</a>

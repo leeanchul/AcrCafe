@@ -8,7 +8,13 @@
 </head>
 <body>
 <div class="container">
-<a th:href="@{/}">홈</a>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/test/list}">Cafe</a></li>
+      <li class="breadcrumb-item active">Detail</li>
+    </ol>
+  </nav>
 <h1>사진 + 글 테스트중입니다.</h1>
 
 <a th:href="@{/test/insertform}">글 쓰기</a>
