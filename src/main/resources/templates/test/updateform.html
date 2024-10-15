@@ -18,6 +18,11 @@
   </nav>
   <h1>게시물 수정</h1>
 <form th:action="@{/test/update}" method="post" enctype="multipart/form-data">
+  <div class="mb-2">
+    <label class="form-label" for="num">번호</label>
+    <input class="form-control" type="text" id="num" name="num"
+           th:value="${dto.num}" readonly/>
+  </div>
   <input class="form-control" type="text" name="writer" id="writer" th:value="${dto.writer}"/>
   <div class="mb-2">
     <label class="form-label" for="title">제목</label>
