@@ -8,7 +8,14 @@
 </head>
 <body>
 <div class="container">
-  <a th:href="@{/cafe/list}">카페목록</a>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/test/list}">Cafe</a></li>
+      <li class="breadcrumb-item active"><a th:href="@{/gallery/list}">갤러리</a></li>
+      <li class="breadcrumb-item active"><a th:href="@{/cafe/list}">한줄일기</a></li>
+    </ol>
+  </nav>
   <h1>새글 작성 양식</h1>
   <form th:action="@{/cafe/add}" method="post">
     <div class="mb-2">

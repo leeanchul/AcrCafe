@@ -12,23 +12,35 @@
       }
 
   </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
+<div class="container">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/test/list}">Cafe</a></li>
+      <li class="breadcrumb-item active"><a th:href="@{/gallery/list}">갤러리</a></li>
+      <li class="breadcrumb-item active"><a th:href="@{/cafe/list}">한줄일기</a></li>
+    </ol>
+  </nav>
 <h1><strong th:text="${dto.nickName}"></strong>님정보 수정 </h1>
-<div>
+
   <form th:action="@{/user/update}" method="post" enctype="multipart/form-data">
     <div>
-      <label for="userName">회원 아이디</label>
-      <input th:value="${dto.userName}" type="text" id="userName" disabled>
+      <label class="form-label" for="userName">회원 아이디</label>
+      <input class="form-control" th:value="${dto.userName}" type="text" id="userName" disabled>
     </div>
 <div>
-  <label for="email">이메일</label>
-  <input type="text" id="email" name="email" th:value="${dto.email}"/>
+  <label class="form-label" for="email">이메일</label>
+  <input class="form-control" type="text" id="email" name="email" th:value="${dto.email}"/>
 </div>
     <div>
-      <label for="image">이미지</label>
-      <input type="file" name="image" id="image" accept="image/*"/>
+      <label class="form-label" for="image">이미지</label>
+      <input class="form-control" type="file" name="image" id="image" accept="image/*"/>
     </div>
     <div>
       <th:block th:if="${dto.profile == null}">
@@ -42,12 +54,12 @@
       </th:block>
     </div>
     <div>
-      <label for="nickName">회원 이름</label>
-      <input th:value="${dto.nickName}" type="text" id="nickName" name="nickName">
+      <label class="form-label" for="nickName">회원 이름</label>
+      <input  class="form-control" th:value="${dto.nickName}" type="text" id="nickName" name="nickName">
     </div>
     <div>
-      <label for="role">회원 등급</label>
-      <input th:value="${dto.role}" type="text" id="role" name="role" disabled>
+      <label class="form-label" for="role">회원 등급</label>
+      <input class="form-control" th:value="${dto.role}" type="text" id="role" name="role" disabled>
     </div>
 
     <button type="submit">수정 </button>

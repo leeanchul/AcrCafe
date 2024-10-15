@@ -8,6 +8,13 @@
 </head>
 <body>
 <div class="container">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/test/list}">Cafe</a></li>
+      <li class="breadcrumb-item active">Detail</li>
+    </ol>
+  </nav>
   <h1>게시물 업로드</h1>
 <form th:action="@{/test/insert}" method="post" enctype="multipart/form-data">
   <div class="mb-2">
@@ -23,7 +30,7 @@
     <textarea class="form-control" name="content" id="content"  rows="10"></textarea>
   </div>
 
-  <button type="submit">업로드</button>
+  <button class="btn btn-outline-dark" type="submit">업로드</button>
 </form>
 </div>
 </body>
