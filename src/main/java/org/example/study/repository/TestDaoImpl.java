@@ -30,6 +30,16 @@ public class TestDaoImpl implements TestDao{
   }
 
   @Override
+  public void delete(int num) {
+    session.delete("test.delete",num);
+  }
+
+  @Override
+  public void update(TestDto dto) {
+    session.update("test.update",dto);
+  }
+
+  @Override
   public int getCount(TestDto dto) {
     return session.selectOne("test.getCount", dto);
   }

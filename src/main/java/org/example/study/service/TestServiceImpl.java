@@ -1,7 +1,9 @@
 package org.example.study.service;
 
+import org.example.study.dto.CafeDto;
 import org.example.study.dto.TestCommentDto;
 import org.example.study.dto.TestDto;
+import org.example.study.exception.NotOwnerException;
 import org.example.study.repository.TestCommentDao;
 import org.example.study.repository.TestDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,12 +97,31 @@ public class TestServiceImpl implements TestService{
     model.addAttribute("pageNum", pageNum);
     model.addAttribute("dto", dto); //키워드정보가 들어 있는 dto 를 모델에 담기
     model.addAttribute("totalRow", totalRow);
+
   }
 
   @Override
   public void getDto(Model model, int num) {
     TestDto dto=dao.getDto(num);
     model.addAttribute("dto",dto);
+    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+    model.addAttribute("userName",userName);
+  }
+
+  @Override
+  public void delete(int num) {
+    //현재 로그인 한 사용자에 id 를 가져오기.
+    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+    String writer=dao.getDto(num).getWriter();
+    if(!userName.equals(writer)){
+      throw new NotOwnerException("글 작성자와 일치 하지 않습니다");
+    }
+    dao.delete(num);
+  }
+
+  @Override
+  public void update(TestDto dto) {
+    dao.update(dto);
   }
 
   @Override

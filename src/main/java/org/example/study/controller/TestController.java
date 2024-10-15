@@ -3,6 +3,7 @@ package org.example.study.controller;
 import org.apache.commons.io.IOUtils;
 import org.example.study.dto.TestCommentDto;
 import org.example.study.dto.TestDto;
+import org.example.study.dto.UserDto;
 import org.example.study.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +60,24 @@ public class TestController {
     service.getDto(model,num);
     service.commentList(model,num);
     return "test/detail";
+  }
+
+  @GetMapping("/test/delete")
+  public String delete(int num){
+    service.delete(num);
+    return "redirect:/test/list";
+  }
+  @GetMapping("/test/updateform")
+  public String updateform(Model model,int num){
+    service.getDto(model,num);
+    return "test/updateform";
+  }
+
+  @PostMapping("/test/update")
+  public String update(TestDto dto){
+    System.out.println(dto);
+    service.update(dto);
+    return "redirect:/test/list";
   }
 
 }

@@ -9,6 +9,7 @@ public interface TestDao {
   void insert(TestDto dto);
   List<TestDto> getList(TestDto dto);
   TestDto getDto(int num);
-
+  void delete(int num);
+  void update(TestDto dto);
   int getCount(TestDto dto);
 }

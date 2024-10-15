@@ -37,16 +37,25 @@
         WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
     </select>
 
-
+    <delete id="delete" parameterType="int">
+        delete from baord_test
+        where num=#{num}
+    </delete>
     <select id="getDto" resultType="testDto" parameterType="int">
         SELECT *
         from baord_test
         where num=#{num}
     </select>
 
-    <select id="getCount" resultType="int" parameterType="cafeDto">
+    <select id="getCount" resultType="int" parameterType="testDto">
         SELECT NVL(MAX(ROWNUM), 0)
         FROM baord_test
         <include refid="search"/>
     </select>
+
+    <update id="update" parameterType="testDto">
+        update baord_test
+        set title=#{title},content=#{content}  <if test="saveFileName != null">,saveFileName=#{saveFileName}</if>
+        where num=#{num}
+    </update>
 </mapper>

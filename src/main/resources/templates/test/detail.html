@@ -46,7 +46,10 @@
   </nav>
 
 <h1>상세한 정보</h1>
-
+  <div th:if="${userName == dto.writer}">
+<a th:href="@{/test/updateform(num=${dto.num})}">수정</a>
+  <a th:href="@{/test/delete(num=${dto.num})}">삭제</a>
+  </div>
 <table class="table table-bordered" >
   <thead>
   <th>제목</th>

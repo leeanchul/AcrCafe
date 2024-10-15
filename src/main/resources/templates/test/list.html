@@ -35,6 +35,9 @@
     <td th:text="${tmp.writer}"></td>
     <td><a th:href="@{/test/detail(num=${tmp.num})}" th:text="${tmp.title}"></a></td>
     <td th:text="${tmp.regdate}"></td>
+    <div th:if="${userName == tmp.writer}">
+
+    </div>
   </tr>
   </tbody>
 </table>
