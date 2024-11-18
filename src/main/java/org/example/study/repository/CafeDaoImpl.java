@@ -9,31 +9,33 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CafeDaoImpl implements CafeDao{
+public class CafeDaoImpl implements CafeDao {
   @Autowired
   private SqlSession session;
+
   @Override
   public void insert(CafeDto dto) {
-    session.insert("cafe.insert",dto);
+    session.insert("cafe.insert", dto);
   }
 
   @Override
   public List<CafeDto> getList(CafeDto dto) {
-    List<CafeDto> list=session.selectList("cafe.getList",dto);
+    List<CafeDto> list = session.selectList("cafe.getList", dto);
     return list;
   }
+
   @Override
   public void delete(int num) {
-    session.delete("cafe.delete",num);
+    session.delete("cafe.delete", num);
   }
 
   @Override
   public void update(CafeDto dto) {
-    session.update("cafe.update",dto);
+    session.update("cafe.update", dto);
   }
 
   @Override
   public CafeDto getDto(int num) {
-    return session.selectOne("cafe.getDto",num);
+    return session.selectOne("cafe.getDto", num);
   }
 }

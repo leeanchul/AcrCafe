@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface TestCommentDao {
   List<TestCommentDto> getCommnetList(int ref_group);
+
   void insert(TestCommentDto dto);
 }

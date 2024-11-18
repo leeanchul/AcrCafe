@@ -8,19 +8,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TestCommentDaoImpl implements TestCommentDao{
+public class TestCommentDaoImpl implements TestCommentDao {
 
   @Autowired
   SqlSession session;
 
   @Override
   public List<TestCommentDto> getCommnetList(int ref_group) {
-    List<TestCommentDto> list=session.selectList("testComment.getList",ref_group);
+    List<TestCommentDto> list = session.selectList("testComment.getList", ref_group);
     return list;
   }
 
   @Override
   public void insert(TestCommentDto dto) {
-    session.insert("testComment.insert",dto);
+    session.insert("testComment.insert", dto);
   }
 }

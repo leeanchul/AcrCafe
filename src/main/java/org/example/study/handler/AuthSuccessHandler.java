@@ -14,6 +14,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
 import jakarta.servlet.http.Cookie;
 
 
@@ -44,21 +45,21 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                       Authentication authentication) throws IOException, ServletException {
     //여기 까지 실행순서가 넘어오면 인증을 통과 했으므로 토큰을 발급해서 응답한다.
-    String jwtToken=jwtUtil.generateToken(authentication.getName());
+    String jwtToken = jwtUtil.generateToken(authentication.getName());
     // JWT를 쿠키에 담아 응답 (쿠키에 공백문자는 에러를 일으키기 때문에 공백대신에  "+" 를 사용함)
-    Cookie cookie = new Cookie(jwtName, "Bearer+"+jwtToken);
+    Cookie cookie = new Cookie(jwtName, "Bearer+" + jwtToken);
     cookie.setMaxAge(cookieExpiration); // 쿠키 유지 시간 초 단위로 설정
     cookie.setHttpOnly(true); //웹브라우저에서 JavaScript에서 접근 불가 하도록 설정
     cookie.setPath("/"); // 모든 경로에서 쿠키를 사용할수 있도록 설정
     response.addCookie(cookie);
 
-    SavedRequest cashed=requestCache.getRequest(request, response);
+    SavedRequest cashed = requestCache.getRequest(request, response);
 
-        if(cashed==null) {
+    if (cashed == null) {
       System.out.println("성공핸들러(if문) 실행되었습니다.");
-      RequestDispatcher rd=request.getRequestDispatcher("/user/login_success");
+      RequestDispatcher rd = request.getRequestDispatcher("/user/login_success");
       rd.forward(request, response);
-    }else {
+    } else {
       System.out.println("성공핸들러(else문) 실행되었습니다.");
       System.out.println("Saved Request URL: " + cashed.getRedirectUrl());
       super.onAuthenticationSuccess(request, response, authentication);

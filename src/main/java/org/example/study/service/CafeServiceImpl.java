@@ -12,15 +12,16 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 @Service
-public class CafeServiceImpl implements CafeService{
+public class CafeServiceImpl implements CafeService {
   @Autowired
   private CafeDao dao;
 
   @Autowired
   private UserDao user;
+
   @Override
   public void insert(CafeDto dto) {
-    String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
     dto.setWriter(userName);
     //DB 에 저장
     dao.insert(dto);
@@ -28,19 +29,19 @@ public class CafeServiceImpl implements CafeService{
 
   @Override
   public void getList(Model model, CafeDto dto) {
-    List<CafeDto>list=dao.getList(dto);
-    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+    List<CafeDto> list = dao.getList(dto);
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-    model.addAttribute("list",list);
-    model.addAttribute("userName",userName);
+    model.addAttribute("list", list);
+    model.addAttribute("userName", userName);
   }
 
   @Override
   public void delete(int num) {
     //현재 로그인 한 사용자에 id 를 가져오기.
-    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-    String writer=dao.getDto(num).getWriter();
-    if(!userName.equals(writer)){
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    String writer = dao.getDto(num).getWriter();
+    if (!userName.equals(writer)) {
       throw new NotOwnerException("글 작성자와 일치 하지 않습니다");
     }
     dao.delete(num);
@@ -52,15 +53,15 @@ public class CafeServiceImpl implements CafeService{
   }
 
   @Override
-  public void getDto(Model model,int num) {
-    CafeDto dto=dao.getDto(num);
+  public void getDto(Model model, int num) {
+    CafeDto dto = dao.getDto(num);
 
     //현재 로그인 한 사용자에 id 를 가져오기.
-    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-    String writer=dto.getWriter();
-    if(!writer.equals(userName)){
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    String writer = dto.getWriter();
+    if (!writer.equals(userName)) {
       throw new NotOwnerException("글 작성자와 일치 하지 않습니다.");
     }
-    model.addAttribute("dto",dto);
+    model.addAttribute("dto", dto);
   }
 }

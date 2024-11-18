@@ -33,55 +33,49 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity hs, AuthSuccessHandler successHandler,
                                          AuthFailHandler failHandler,
-                                         CookieRequestCache cookCache) throws Exception{
-    String[] whiteList= {"/", "/user/signupform", "/user/signup","/favicon.ico","/error",
+                                         CookieRequestCache cookCache) throws Exception {
+    String[] whiteList = {"/", "/user/signupform", "/user/signup", "/favicon.ico", "/error",
         "/user/loginform", "/user/login_fail", "/user/expired",
         "/gallery/list", "/gallery/detail", "/upload/images/**"
-        ,"/upload/**","/test/list",
-        "/cafe/list", "/caf/detail","/test/comment_list","/test/list", "/test/detail/**",
+        , "/upload/**", "/test/list",
+        "/cafe/list", "/caf/detail", "/test/comment_list", "/test/list", "/test/detail/**",
         "/api/**"};
 
-    hs.csrf(csrf->csrf.disable())
-        .authorizeHttpRequests(config->config
+    hs.csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(config -> config
             .requestMatchers(whiteList).permitAll()
             .requestMatchers("user").hasAnyRole("USER")
-            .anyRequest().authenticated()
-        )
-        .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .formLogin(config->config
-                .loginPage("/user/required_loginform")
-                .loginProcessingUrl("/user/login")
-                .usernameParameter("userName")
-                .passwordParameter("password")
-                .successHandler(successHandler)
-    //.failureForwardUrl("/user/login_fail") //로그인 실패시 forward 될 url 설정
-                .failureHandler(failHandler) //로그인 실패 핸들러 등록
-                .permitAll()
-            )
-        .logout(config->config
+            .anyRequest().authenticated())
+        .sessionManagement(config ->
+            config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .formLogin(config -> config
+            .loginPage("/user/required_loginform")
+            .loginProcessingUrl("/user/login")
+            .usernameParameter("userName")
+            .passwordParameter("password")
+            .successHandler(successHandler)
+            .failureForwardUrl("/user/login_fail")
+            .failureHandler(failHandler)
+            .permitAll())
+        .logout(config -> config
             .logoutUrl("/user/logout")
-            .logoutSuccessHandler((request, response, auth)->{
-              Cookie cook=new Cookie(jwtName, null);
-              //쿠키를 삭제하기 위해 setMaxAge(0)
+            .logoutSuccessHandler((request, response, auth) -> {
+              Cookie cook = new Cookie(jwtName, null);
+              // 쿠키를 삭제하기 위해 setMaxAge(0)
               cook.setMaxAge(0);
               cook.setPath("/");
               response.addCookie(cook);
-              //쿠키 삭제후에 최상위 경로로 리다일렉트 이동
-              response.sendRedirect(request.getContextPath()+"/");
+              response.sendRedirect(request.getContextPath() + "/");
             })
-            .permitAll()
-        )
+            .permitAll())
         .exceptionHandling(config ->
-            //403 forbidden 인 경우 forward 이동 시킬 경로 설정
-            config.accessDeniedPage("/user/denied")
-        )
-        //토큰을 검사하는 필터를 security filter 가 동작하기 이전에 동작하도록 설정 한다.
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-        //세션을 사용할수 없기때문에 쿠키케시를 사용하도록 설정한다.
+            config.accessDeniedPage("/user/denied"))
+        .addFilterBefore(jwtFilter,
+            UsernamePasswordAuthenticationFilter.class)
         .requestCache(config -> config.requestCache(cookCache));
-
     return hs.build();
   }
+
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

@@ -13,39 +13,41 @@ import java.lang.reflect.Parameter;
 
 @Controller
 public class CafeController {
-@Autowired
+  @Autowired
   private CafeService service;
 
-@PostMapping("/cafe/update")
-public String update(CafeDto dto){
-  service.update(dto);
-  return "redirect:/cafe/list";
-}
+  @PostMapping("/cafe/update")
+  public String update(CafeDto dto) {
+    service.update(dto);
+    return "redirect:/cafe/list";
+  }
 
-@GetMapping("/cafe/updateform")
-public String updateform(Model model,int num){
-  service.getDto(model,num);
-  return "/cafe/updateform";
-}
+  @GetMapping("/cafe/updateform")
+  public String updateform(Model model, int num) {
+    service.getDto(model, num);
+    return "/cafe/updateform";
+  }
 
-@GetMapping("/cafe/delete")
-public String delete(int num){
-  service.delete(num);
-  return "redirect:/cafe/list";
-}
+  @GetMapping("/cafe/delete")
+  public String delete(int num) {
+    service.delete(num);
+    return "redirect:/cafe/list";
+  }
+
   @PostMapping("/cafe/add")
-  public String add(CafeDto dto){
+  public String add(CafeDto dto) {
     service.insert(dto);
     return "redirect:/cafe/list";
   }
 
   @GetMapping("/cafe/list")
-  public String list(Model model,CafeDto dto){
+  public String list(Model model, CafeDto dto) {
     service.getList(model, dto);
     return "cafe/list";
   }
+
   @GetMapping("/cafe/addform")
-  public String addform(){
+  public String addform() {
     return "cafe/addform";
   }
 }

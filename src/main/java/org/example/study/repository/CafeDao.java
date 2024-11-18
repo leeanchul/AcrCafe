@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface CafeDao {
   void insert(CafeDto dto);
+
   List<CafeDto> getList(CafeDto dto);
+
   void delete(int num);
+
   void update(CafeDto dto);
+
   CafeDto getDto(int num);
 }

@@ -16,13 +16,14 @@
     </sql>
 
     <sql id="column">
-        num,writer,title,content,savefilename, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
+        num
+        ,writer,title,content,savefilename, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
     </sql>
 
     <insert id="insert" parameterType="testDto">
         INSERT INTO baord_test
-            (num, writer, title, content,savefilename,regdate)
-        VALUES(test_seq.NEXTVAL, #{writer}, #{title}, #{content},#{saveFileName}, SYSDATE)
+            (num, writer, title, content, savefilename, regdate)
+        VALUES (test_seq.NEXTVAL, #{writer}, #{title}, #{content}, #{saveFileName}, SYSDATE)
     </insert>
 
     <select id="getList" parameterType="testDto" resultType="testDto">
@@ -30,7 +31,8 @@
         FROM
         (SELECT result1.*, ROWNUM AS rnum
         FROM
-        (SELECT <include refid="column"/>
+        (SELECT
+        <include refid="column"/>
         FROM baord_test
         <include refid="search"/>
         ORDER BY num DESC) result1)
@@ -38,13 +40,14 @@
     </select>
 
     <delete id="delete" parameterType="int">
-        delete from baord_test
-        where num=#{num}
+        delete
+        from baord_test
+        where num = #{num}
     </delete>
     <select id="getDto" resultType="testDto" parameterType="int">
         SELECT *
         from baord_test
-        where num=#{num}
+        where num = #{num}
     </select>
 
     <select id="getCount" resultType="int" parameterType="testDto">
@@ -55,7 +58,8 @@
 
     <update id="update" parameterType="testDto">
         update baord_test
-        set title=#{title},content=#{content}  <if test="saveFileName != null">,saveFileName=#{saveFileName}</if>
+        set title=#{title},content=#{content}
+        <if test="saveFileName != null">,saveFileName=#{saveFileName}</if>
         where num=#{num}
     </update>
 </mapper>

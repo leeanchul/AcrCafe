@@ -1,6 +1,8 @@
 package org.example.study.controller;
 
 import org.example.study.config.SecurityConfig;
+import org.example.study.dto.TestDto;
+import org.example.study.service.TestService;
 import org.example.study.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,9 +17,10 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+
   @Autowired
   private UserService service;
-
   @GetMapping("/")
   public String home(Model model){
     //서비스에서 해야

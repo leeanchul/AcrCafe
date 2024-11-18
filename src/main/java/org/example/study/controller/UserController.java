@@ -1,14 +1,20 @@
 package org.example.study.controller;
 
+import org.apache.commons.io.IOUtils;
+import org.example.study.dto.TestDto;
 import org.example.study.dto.UserDto;
 import org.example.study.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class UserController {
@@ -18,13 +24,13 @@ public class UserController {
 
 
   @PostMapping("/user/update")
-  public String update(UserDto dto){
+  public String update(UserDto dto) {
     service.update(dto);
     return "redirect:/";
   }
 
   @GetMapping("/user/updateform")
-  public String updateform( Model model){
+  public String updateform(Model model) {
     service.getUser(model);
     return "user/updateform";
   }
@@ -44,6 +50,7 @@ public class UserController {
 
     return "user/signupform";
   }
+
   //로그인이 필요한 요청경로를 로그인 하지 않은 상태로 요청하면 리다일렉트 되는 요청경로
   @GetMapping("/user/required_loginform")
   public String required_loginform() {
@@ -51,7 +58,7 @@ public class UserController {
   }
 
   @RequestMapping("/user/loginform")
-  public String loginform(){
+  public String loginform() {
     return "user/loginform";
   }
   //로그인 폼을 제출(post) 한 로그인 프로세즈 중에 forward 되는 경로이기 때문에 @PostMapping 임에 주의!
@@ -68,3 +75,4 @@ public class UserController {
   }
 
 }
+

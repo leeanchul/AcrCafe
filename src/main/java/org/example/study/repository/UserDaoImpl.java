@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
   @Autowired
   SqlSession session;
 
@@ -17,11 +17,11 @@ public class UserDaoImpl implements UserDao{
 
   @Override
   public UserDto getUser(String userName) {
-    return session.selectOne("user.getUser",userName);
+    return session.selectOne("user.getUser", userName);
   }
 
   @Override
   public void update(UserDto dto) {
-    session.update("user.update",dto);
+    session.update("user.update", dto);
   }
 }

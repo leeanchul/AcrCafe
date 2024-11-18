@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class GalleryDaoImpl implements GalleryDao{
+public class GalleryDaoImpl implements GalleryDao {
 
   //핵심 의존 객체 DI
-  @Autowired private SqlSession session;
+  @Autowired
+  private SqlSession session;
 
   @Override
   public void insert(GalleryDto dto) {

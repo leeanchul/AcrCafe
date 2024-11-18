@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TestServiceImpl implements TestService{
+public class TestServiceImpl implements TestService {
 
   //한 페이지에 글을 몇개씩 표시할 것인지
-  final int PAGE_ROW_COUNT=5;
+  final int PAGE_ROW_COUNT = 5;
   //하단 페이지 UI를 몇개씩 표시할 것인지
-  final int PAGE_DISPLAY_COUNT=5;
+  final int PAGE_DISPLAY_COUNT = 5;
 
   @Autowired
   private TestDao dao;
@@ -36,8 +36,8 @@ public class TestServiceImpl implements TestService{
 
   @Override
   public void insert(TestDto dto) {
-    MultipartFile image=dto.getImage();
-    if(image.getSize() != 0) {
+    MultipartFile image = dto.getImage();
+    if (image.getSize() != 0) {
       //1.업로도된 파일 저장
       //저장할 파일의 이름 겹치지 않는 유일한 문자열로 얻어내기
       String saveFileName = UUID.randomUUID().toString();
@@ -52,43 +52,43 @@ public class TestServiceImpl implements TestService{
         e.printStackTrace();
       }
       dto.setSaveFileName(saveFileName);
-    }else{
+    } else {
       dto.setSaveFileName("null");
     }
-      String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-      dto.setWriter(userName);
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    dto.setWriter(userName);
 
     dao.insert(dto);
   }
 
   @Override
-  public void list(Model model,TestDto dto) {
+  public void list(Model model, TestDto dto) {
 // pageNum 에 해당하는 글정보를 select 에서 Model 객체에 담는 작업을 하면 된다.
 
-    int pageNum=dto.getPageNum();
+    int pageNum = dto.getPageNum();
     //보여줄 페이지의 시작 ROWNUM
-    int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+    int startRowNum = 1 + (pageNum - 1) * PAGE_ROW_COUNT;
     //보여줄 페이지의 끝 ROWNUM
-    int endRowNum=pageNum*PAGE_ROW_COUNT;
+    int endRowNum = pageNum * PAGE_ROW_COUNT;
 
     //하단 시작 페이지 번호
-    int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+    int startPageNum = 1 + ((pageNum - 1) / PAGE_DISPLAY_COUNT) * PAGE_DISPLAY_COUNT;
     //하단 끝 페이지 번호
-    int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+    int endPageNum = startPageNum + PAGE_DISPLAY_COUNT - 1;
     //전체 글의 갯수
-    int totalRow=dao.getCount(dto);
+    int totalRow = dao.getCount(dto);
     //전체 페이지의 갯수 구하기
-    int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+    int totalPageCount = (int) Math.ceil(totalRow / (double) PAGE_ROW_COUNT);
     //끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
-    if(endPageNum > totalPageCount){
-      endPageNum=totalPageCount; //보정해 준다.
+    if (endPageNum > totalPageCount) {
+      endPageNum = totalPageCount; //보정해 준다.
     }
     //계산된 startRowNum과 endRowNum을 dto에 담고
     dto.setStartRowNum(startRowNum);
     dto.setEndRowNum(endRowNum);
     //TestDto 인자로 전달해서 글 목록 얻어오기
-    List<TestDto> list=dao.getList(dto);
-    model.addAttribute("comment",list);
+    List<TestDto> list = dao.getList(dto);
+    model.addAttribute("comment", list);
     // view page 에 전달할 내용을 Model 객체에 담는다.
     model.addAttribute("list", list);
     model.addAttribute("startPageNum", startPageNum);
@@ -102,18 +102,18 @@ public class TestServiceImpl implements TestService{
 
   @Override
   public void getDto(Model model, int num) {
-    TestDto dto=dao.getDto(num);
-    model.addAttribute("dto",dto);
-    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-    model.addAttribute("userName",userName);
+    TestDto dto = dao.getDto(num);
+    model.addAttribute("dto", dto);
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    model.addAttribute("userName", userName);
   }
 
   @Override
   public void delete(int num) {
     //현재 로그인 한 사용자에 id 를 가져오기.
-    String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-    String writer=dao.getDto(num).getWriter();
-    if(!userName.equals(writer)){
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    String writer = dao.getDto(num).getWriter();
+    if (!userName.equals(writer)) {
       throw new NotOwnerException("글 작성자와 일치 하지 않습니다");
     }
     dao.delete(num);
@@ -126,13 +126,13 @@ public class TestServiceImpl implements TestService{
 
   @Override
   public void commentList(Model model, int ref_group) {
-    List<TestCommentDto> list=commentDao.getCommnetList(ref_group);
-    model.addAttribute("comment",list);
+    List<TestCommentDto> list = commentDao.getCommnetList(ref_group);
+    model.addAttribute("comment", list);
   }
 
   @Override
   public void commentInsert(TestCommentDto dto) {
-    String writer= SecurityContextHolder.getContext().getAuthentication().getName();
+    String writer = SecurityContextHolder.getContext().getAuthentication().getName();
     dto.setWriter(writer);
     commentDao.insert(dto);
   }

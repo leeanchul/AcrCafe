@@ -17,7 +17,7 @@
     <select id="getDto" parameterType="int" resultType="cafeDto">
         select *
         from cafe
-        where num=#{num}
+        where num = #{num}
     </select>
 
     <update id="update" parameterType="cafeDto">

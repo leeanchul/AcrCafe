@@ -32,49 +32,51 @@ public class TestController {
   private String fileLocation;
 
   @PostMapping("/test/insertComment")
-  public String insert(TestCommentDto dto){
+  public String insert(TestCommentDto dto) {
     service.commentInsert(dto);
     //댓글 입력하고,현재창에 있게하기위해서
     return "redirect:/test/detail?num=" + dto.getRef_group();
   }
 
   @GetMapping("/test/list")
-  public String list(Model model,TestDto dto){
-   service.list(model,dto);
+  public String list(Model model, TestDto dto) {
+    service.list(model, dto);
     return "test/list";
   }
+
   @GetMapping("/test/insertform")
-  public String insertform(){
+  public String insertform() {
     return "test/insertform";
   }
 
   @PostMapping("/test/insert")
-  public String insert(TestDto dto){
+  public String insert(TestDto dto) {
     System.out.println(dto.getImage());
     service.insert(dto);
     return "redirect:/test/list";
   }
 
   @GetMapping("/test/detail")
-  public String detail(Model model,int num){
-    service.getDto(model,num);
-    service.commentList(model,num);
+  public String detail(Model model, int num) {
+    service.getDto(model, num);
+    service.commentList(model, num);
     return "test/detail";
   }
 
   @GetMapping("/test/delete")
-  public String delete(int num){
+  public String delete(int num) {
     service.delete(num);
     return "redirect:/test/list";
   }
+
   @GetMapping("/test/updateform")
-  public String updateform(Model model,int num){
-    service.getDto(model,num);
+  public String updateform(Model model, int num) {
+    service.getDto(model, num);
     return "test/updateform";
   }
 
   @PostMapping("/test/update")
-  public String update(TestDto dto){
+  public String update(TestDto dto) {
     System.out.println(dto);
     service.update(dto);
     return "redirect:/test/list";

@@ -24,9 +24,9 @@ public class TestDto {
   private int startRowNum;
   private int endRowNum;
   //검색 기능 관련된 필드
-  private String condition="";
-  private String keyword="";
-  private int pageNum=1;
+  private String condition = "";
+  private String keyword = "";
+  private int pageNum = 1;
   //이전글과 다음글의 글번호를 담을 필드
   private int prevNum, nextNum;
 }

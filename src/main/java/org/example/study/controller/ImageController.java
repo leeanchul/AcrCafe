@@ -21,7 +21,7 @@ public class ImageController {
 
   @ResponseBody
   @GetMapping(
-      value = "/upload/{imageName}" ,
+      value = "/upload/x`{imageName}" ,
       // jpg, png, gif 이미지 데이터를 응답할수 있도록 produces 에 배열로 전달한다.
       produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,
           MediaType.IMAGE_GIF_VALUE}
